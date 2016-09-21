@@ -10,5 +10,8 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
+/log/*
+/tmp/*
+/config/config.yml
 /config/database.yml
-/log/*.log
+/config/secrets.yml
