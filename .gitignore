@@ -10,5 +10,5 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
-config/database.yml
-log/*.log
+/config/database.yml
+/log/*.log
