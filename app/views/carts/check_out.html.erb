@@ -1,0 +1,14 @@
+<h3>Chek out</h3>
+<% @cart_items.each do |ci| %> 
+  <ul>
+	<li><%= ci.product.title %><%= " x#{ci.quantity}" %> </li>
+	<li><%= ci.product.description %></li>
+	<li><%= ci.product.price %></li>
+  </ul>
+<% end %>
+
+<%= form_for user_cart_path do |f| %>
+  <%= f.label 'address:' %><br>
+  <%= f.text_field :adress %><br>
+  <%= f.submit "Check_out" %>
+<% end %>

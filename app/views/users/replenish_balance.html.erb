@@ -1,0 +1,9 @@
+<%= form_for @user, url: replenish_balance_user_path do |f| %>
+  <p>Current balance: <%= @user.balance %></p>
+  <p>Replenish: </p>
+
+  <%= f.text_field :balance %><br>
+  
+  <%= f.submit "Replenish" %>
+
+<% end %>

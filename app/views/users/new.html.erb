@@ -1,0 +1,12 @@
+<h1> Создание пользователя </h1>
+<%= form_for @user do |f| %>
+  <p>Имя</p>
+  <%= f.text_field :first_name %><br>
+  <p>Фамилия</p>
+  <%= f.text_field :last_name %><br>
+  <p>Эектронная почта</p>
+  <%= f.text_field :email %><br>
+  <p>Пароль</p>
+  <%= f.text_field :password %><br>
+  <%= f.submit "Зарегистрироваться" %>
+<% end %>

@@ -1,0 +1,13 @@
+<%= form_for user_orders_x_path do |f| %>
+  <p><%= @order.adress %></p>
+  <p><%= @order.amount %></p>
+  <p><%= @order.items_count %></p>
+  <% @order.order_items.each do |oi| %> 
+  <ul>
+	<li><%= oi.product.title %><%= " x#{oi.quantity}" %> </li>
+	<li><%= oi.product.description %></li>
+	<li><%= oi.product.price %></li>
+  </ul>
+<% end %>
+  <p><%= f.submit "Pay" %></p>
+<% end %>

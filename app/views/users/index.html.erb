@@ -1,0 +1,4 @@
+<% @users.each do |us| %>
+	<p><%= link_to us.full_name, user_path(us.id) %></p><hr>
+<% end %>
+<%= link_to "sign up", new_user_path %>
