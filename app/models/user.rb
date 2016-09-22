@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
 	validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
 	after_create :create_cart_for_user
+	before_create :create_remember_token
+	before_save ->{ email.downcase! }
 
 	def full_name
 		"#{first_name} #{last_name}"
@@ -70,10 +72,22 @@ class User < ActiveRecord::Base
     	Order.bigest_order.map { |order| find(order.user_id) }.uniq
     end
 
+    def self.new_remember_token
+    	SecureRandom.urlsafe_base64
+    end
+
+    def self.encrypt(token)
+    	Digest::SHA1.hexdigest(token.to_s)
+    end
+
   private 
 
 	def create_cart_for_user
 		Cart.create(user: self)
+	end
+
+	def create_remember_token
+		self.remember_token = User.encrypt(User.new_remember_token)
 	end
 
 end
