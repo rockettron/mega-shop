@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :orders, shallow: true
     match 'replenish_balance', on: :member, via: [:get, :patch]
   end
+  match '/sign_up', to: 'users#new', via: [:get]
+
 
   resources :orders do
     get 'last', on: :collection

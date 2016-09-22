@@ -8,11 +8,11 @@ class User < ActiveRecord::Base
 
 	validates :first_name, :last_name, presence: true
 	has_secure_password
-	validates :password, presence: true, length: { minimum: 6 }
+	validates :password, length: { minimum: 6 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
-	
+	after_create :create_cart_for_user
 
 	def full_name
 		"#{first_name} #{last_name}"
@@ -20,12 +20,6 @@ class User < ActiveRecord::Base
 
 	def replenish_balance(money)
 		self.update_attributes(balance: self.balance + money)
-	end
-
-	def self.registration(user_params)
-		user = create(user_params)   #first_name: a, last_name: b, email: c, password: d) 
-		Cart.create(user: user)
-		user
 	end
 
 	def change_password(old_password, new_password)
@@ -75,4 +69,11 @@ class User < ActiveRecord::Base
     def self.user_of_bigest_order
     	Order.bigest_order.map { |order| find(order.user_id) }.uniq
     end
+
+  private 
+
+	def create_cart_for_user
+		Cart.create(user: self)
+	end
+
 end
