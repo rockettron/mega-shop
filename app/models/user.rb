@@ -2,14 +2,15 @@ class User < ActiveRecord::Base
 	#extend Enumerize 
 
 	#enumerize :role, in: [:admin, :redactor, :guest, :user], default: :guest
+	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
 	has_many :carts, dependent: :destroy
 	has_many :orders, dependent: :destroy
 
-	validates :first_name, :last_name, presence: true
 	has_secure_password
+
+	validates :first_name, :last_name, presence: true
 	validates :password, length: { minimum: 6 }
-	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
 
 	after_create :create_cart_for_user
