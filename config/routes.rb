@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'users#index'
 
-  resources :users do
+  resources :users, except: [:new, :create] do
     get 'cart', to: 'carts#show'
     match 'cart/check_out', to: 'carts#check_out', via: [:get, :post] 
     match 'cart/add_product', to: 'carts#add_product', via: [:get, :post]
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :orders, shallow: true
     match 'replenish_balance', on: :member, via: [:get, :patch]
   end
-  match '/sign_up', to: 'users#new', via: [:get]
+  
 
 
   resources :orders do
@@ -25,9 +25,12 @@ Rails.application.routes.draw do
     get 'top10', on: :collection
   end
 
-  resources :sessions, only: [:new, :create, :destroy]
-  match 'sign_in', to: 'sessions#new', via: 'get'
-  match 'sign_out', to: 'sessions#destroy', via: 'delete'
+  get 'sign_up', to: 'users#new'
+  post 'sign_up', to: 'users#create'
+  get 'sign_in', to: 'sessions#new'
+  post 'sign_in', to: 'sessions#create'
+  delete 'sign_out', to: 'sessions#destroy'
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
