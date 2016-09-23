@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
 	before_action(except: [:index, :new, :create]) { params[:id] && @user = User.find(params[:id]) }
+	before_action :signed_in_user, only: [:edit, :update]
+	before_action :correct_user, only: [:edit, :update]
 
 	def index
 		@users = User.all
@@ -51,5 +53,13 @@ class UsersController < ApplicationController
 	
 	def user_params
 		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+	end
+#true avtorizacija
+	def signed_in_user
+		redirect_to root_url, notice: "Please, sign_in..." unless signed_in?
+	end
+
+	def correct_user
+		redirect_to root_url, notice: "Are you oxuel?" unless current_user?(@user)
 	end
 end
