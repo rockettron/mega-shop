@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
 	validates :first_name, :last_name, presence: true
 	validates :password, length: { minimum: 6 }
-	validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
+	validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
 
 	after_create :create_cart_for_user
 	before_create :create_remember_token
