@@ -23,3 +23,5 @@ class SessionsController < ApplicationController
   	end
 
 end
+
+# I love Lizka 
