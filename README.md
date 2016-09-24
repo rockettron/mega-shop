@@ -6,13 +6,10 @@
 Clone repo to your local machine
 
 
-**Commandline Interface**
-
 With HTTPS
 
 ```
 $ git clone https://github.com/rockettron/mega-shop.git
-
 ```
 
 With SSH
