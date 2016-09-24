@@ -19,9 +19,13 @@ module SessionsHelper
 		p @current_user
 		remember_token = User.encrypt(cookies[:remember_token])
 		@current_user ||= User.find_by_remember_token(remember_token)
-		if @current_user.nil?
-			@current_user = User.find_by(id: session[:guest_user])
+		if @current_user.nil? 
+			@current_user = User.new(GUEST_PARAMS)
+			if session[:guest_cart_id].nil?
+				session[:guest_cart_id] = Cart.create.id
+			end
 		end
+
 	end
 
 	def current_user?(user)
@@ -63,14 +67,5 @@ module SessionsHelper
   	first_name: "Guest",
   	role: :guest
   }
-
-  def sign_guest
-  	if @current_user.nil?
-  		current_user = User.new(GUEST_PARAMS)
-  		p current_user
-  		cart = Cart.create	
-  		session[:guest_cart_id] = cart.id
-  	end
-  end
 
 end
