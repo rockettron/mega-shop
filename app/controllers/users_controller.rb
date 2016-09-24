@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
 	before_action except: [:index, :new, :create] { params[:id] && @user = User.find(params[:id]) }
 	before_action only: [:new, :create] { redirect_back_or root_url if signed_in? }
-	before_action :signed_in_user, only: [:index, :edit, :update] ####ДИМАС, СДЕЛАЙ КРАСИВУЮ ДОМАШНЮЮ СТРАНИЦУ ТИПА COOL SHOP
+	before_action :authenticate_user, only: [:edit, :update] ####ДИМАС, СДЕЛАЙ КРАСИВУЮ ДОМАШНЮЮ СТРАНИЦУ ТИПА COOL SHOP
 	before_action :correct_user, only: [:edit, :update]
 
 	def index
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
 	def destroy
 		@user.destroy
-		redirect_to :users
+		redirect_to users_path, notice: "User deleted."
 	end
 
 	def replenish_balance
@@ -55,15 +55,5 @@ class UsersController < ApplicationController
 	def user_params
 		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
 	end
-#true avtorizacija
-	def signed_in_user
-		unless signed_in?
-			store_location
-			redirect_to sign_in_url, notice: "Please, sign_in..." 
-		end
-	end
 
-	def correct_user
-		redirect_to root_url unless current_user?(@user)
-	end
 end

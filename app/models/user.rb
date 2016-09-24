@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-	#extend Enumerize 
-
-	#enumerize :role, in: [:admin, :redactor, :guest, :user], default: :guest
+	extend Enumerize 
+	enumerize :role, in: [:admin, :moderator, :guest, :user], default: :user
+	
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
 	has_many :carts, dependent: :destroy

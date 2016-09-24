@@ -1,11 +1,9 @@
 <%= link_to "sample app", root_path %>
 <nav>
 	<ul>
+		<li><%= link_to "You sign at #{current_user.full_name}", current_user %></li>
 		<% if signed_in? %>
-			<ul>
-				<li><%= link_to "Profile", current_user %></li>
-				<li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
-			</ul>
+			<li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
 		<% else %>
 			<li><%= link_to "Sign in", sign_in_path %></li>
 		<% end %>

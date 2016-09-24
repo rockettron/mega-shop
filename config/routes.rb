@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     match 'replenish_balance', on: :member, via: [:get, :patch]
   end
   
+  namespace :admin do
+    root 'admin#root'
+  end
 
 
   resources :orders do

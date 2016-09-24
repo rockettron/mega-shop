@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
 	
-	before_action { @cart = User.find(params[:user_id]).select_active_cart }
+	before_action :set_cart
 
 	def show
 		@cart_items = @cart.cart_items
@@ -28,4 +28,13 @@ class CartsController < ApplicationController
 		redirect_to action: 'show'
 	end
 
+	private
+
+	def set_cart
+		if signed_in?
+			@cart = current_user.select_active_cart 
+		else
+			@cart = Cart.find(id: session[:guest_cart_id])
+		end
+	end
 end

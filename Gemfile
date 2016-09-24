@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'nokogiri'
 gem 'bcrypt-ruby'
+gem 'enumerize'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use mysql as the database for Active Record
