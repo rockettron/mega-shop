@@ -1,11 +1,14 @@
 class SessionsController < ApplicationController
+	before_action only: [:new, :create] { redirect_back_or root_url if signed_in? }
 
-	def create
+	def new
+	end
+
+	def create	
 		user = User.find_by(email: user_params[:email].downcase)
 		if user && user.authenticate(user_params[:password])
 			sign_in user
-			flash[:success] = "Welcome, #{user.first_name}!"
-			redirect_to user
+			redirect_back_or user
 		else
 			flash.now[:error] = "Invalid email or password"
 			render :new
