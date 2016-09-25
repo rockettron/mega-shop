@@ -157,6 +157,7 @@ DEPENDENCIES
   enumerize
   jbuilder (~> 2.0)
   jquery-rails
+  json
   mysql2 (~> 0.4.4)
   nokogiri
   rails (= 4.2.6)

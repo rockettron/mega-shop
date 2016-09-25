@@ -12,20 +12,13 @@ module SessionsHelper
 
 	def current_user=(user)
 		@current_user = user
-		p @current_user
 	end
 
 	def current_user
-		p @current_user
+		puts session
 		remember_token = User.encrypt(cookies[:remember_token])
 		@current_user ||= User.find_by_remember_token(remember_token)
-		if @current_user.nil? 
-			@current_user = User.new(GUEST_PARAMS)
-			if session[:guest_cart_id].nil?
-				session[:guest_cart_id] = Cart.create.id
-			end
-		end
-
+		@current_user ||= User.new(GUEST_PARAMS)
 	end
 
 	def current_user?(user)
@@ -55,7 +48,7 @@ module SessionsHelper
 	def authenticate_user
 		unless signed_in?
 			store_location
-			redirect_to sign_in_url, notice: "Please, sign_in..." 
+			redirect_to sign_in_path, notice: "Please, sign_in..." 
 		end
 	end
 
