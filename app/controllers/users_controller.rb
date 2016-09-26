@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
 
-	before_action except: [:index, :new, :create] { params[:id] && @user = User.find(params[:id]) }
+	before_action except: [:new, :create] { params[:id] && @user = User.find(params[:id]) }
 	before_action only: [:new, :create] { redirect_back_or root_url if signed_in? }
-	before_action :authenticate_user, only: [:edit, :update] ####ДИМАС, СДЕЛАЙ КРАСИВУЮ ДОМАШНЮЮ СТРАНИЦУ ТИПА COOL SHOP
-	before_action :correct_user, only: [:edit, :update]
+	before_action :authenticate_user, only: [:edit, :update, :show] ####ДИМАС, СДЕЛАЙ КРАСИВУЮ ДОМАШНЮЮ СТРАНИЦУ ТИПА COOL SHOP
+	before_action :correct_user, only: [:edit, :update, :show]
 
-	def index
+	def index		# Удалить
 		@users = User.all
 	end
 
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 		redirect_to users_path, notice: "User deleted."
 	end
 
-	def replenish_balance
+	def replenish_balance		# Нужно удалить
 		if params[:user] 
 			add = params.require(:user)[:balance]
 			@user.replenish_balance(add.to_i)

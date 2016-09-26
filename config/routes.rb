@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'users#index'
 
-  resources :users, except: [:new, :create] do
+  resources :users, only: [:edit, :show, :destroy, :update] do
     get 'cart', to: 'carts#show'
     match 'cart/check_out', to: 'carts#check_out', via: [:get, :post] 
     match 'cart/add_product', to: 'carts#add_product', via: [:get, :post]
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   namespace :admin do
     root 'admin#root'
+    resources :profiles, only: [:show, :index, :destroy]
   end
 
 
