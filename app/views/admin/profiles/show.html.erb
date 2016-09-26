@@ -1,0 +1,6 @@
+<h3><%= @user.full_name %></h3>
+<p><%= @user.email %> </p> 
+<p>Role: <%= @user.role %></p>
+<% if signed_in? && (current_user.role.admin? || current_user?(@user)) %>
+	<%= link_to "Удалить", admin_profile_path(@user), :method => :delete %> 
+<% end %>

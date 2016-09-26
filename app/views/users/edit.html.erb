@@ -5,6 +5,10 @@
   <%= f.text_field :last_name %><br>
   <p>Эектронная почта</p>
   <%= f.text_field :email %><br>
+  <p>
+    <%= f.label :role %>
+    <%= f.select :role, User.role.options %>
+  </p>
   <p>Пароль</p>
   <%= f.text_field :password %><br>
   <p>Повторите пароль</p>

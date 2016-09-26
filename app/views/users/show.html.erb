@@ -1,4 +1,6 @@
 <h3><%= @user.full_name %></h3>
 <p><%= @user.email %> </p>
 <%= link_to "Редактировать", edit_user_path %> 
-<%= link_to "Удалить", @user, :method => :delete %> 
+<% if signed_in? && (current_user.role.admin? || current_user?(@user)) %>
+	<%= link_to "Удалить", @user, :method => :delete %> 
+<% end %>
