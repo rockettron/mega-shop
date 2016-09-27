@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 	has_many :orders, dependent: :destroy
 
 	has_secure_password
-	
+
 	validates :password, length: { minimum: 6 }
 	validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
 
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 	before_save ->{ email.downcase! }
 
 	def full_name
-		"#{first_name} #{last_name}"
+		#"#{first_name} #{last_name}"
 	end
 
 	def select_active_cart
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 	end
 
 	def superuser?
-		self.role.moderator? || selt.role.admin?
+		self.role.moderator? || self.role.admin?
 	end
 
     def self.most_active_user_for_period(count_day = 7)
@@ -51,5 +51,5 @@ class User < ActiveRecord::Base
 	def create_remember_token
 		self.remember_token = User.encrypt(User.new_remember_token)
 	end
-
+	
 end
