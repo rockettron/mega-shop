@@ -4,6 +4,7 @@ class CreateImages < ActiveRecord::Migration
     	t.string :file
     	t.string :imageable_type
     	t.belongs_to :imageable, polymorphic: true
+    	
       t.timestamps null: false
     end
   end
