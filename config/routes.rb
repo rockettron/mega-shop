@@ -1,20 +1,13 @@
 Rails.application.routes.draw do
 
-  root 'users#index'
+  root to: 'dashboard#home'
 
-  resources :users, only: [:edit, :show, :destroy, :update] do
-    get 'cart', to: 'carts#show'
-    match 'cart/check_out', to: 'carts#check_out', via: [:get, :post] 
-    match 'cart/add_product', to: 'carts#add_product', via: [:get, :post]
-    match 'cart/delete_product', to: 'carts#delete_product', via: [:get, :post] 
-    
-    resources :orders, shallow: true
-    match 'replenish_balance', on: :member, via: [:get, :patch]
-  end
+  resources :users, only: [:edit, :update] 
   
+  resource :profile
+
   namespace :admin do
     root 'admin#root'
-    resources :profiles, only: [:show, :index, :destroy]
   end
 
 

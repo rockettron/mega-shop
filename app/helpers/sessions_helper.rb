@@ -57,8 +57,8 @@ module SessionsHelper
 	end
 
 	GUEST_PARAMS = {
-  	first_name: "Guest",
-  	role: :guest
-  }
+  		email: "Guest",
+  		role: :guest
+  	}
 
 end
