@@ -10,19 +10,6 @@ class Order < ActiveRecord::Base
 		self.items_count = total_items
 	end
 
-	def pay!
-		return if paid
-		user = self.user
-		if (user.balance < amount)
-			raise "No enough money"
-		else
-			user.balance -= amount
-			user.save
-			self.paid = true
-			save
-		end
-	end
-
 	def total_items
 		order_items.inject(0) { |count, t| count + t.quantity }
 	end
@@ -32,7 +19,7 @@ class Order < ActiveRecord::Base
 	end
 
 	def users_email
-		User.find(user_id).email
+		user.email
 	end
 
 	def empty?
@@ -45,10 +32,6 @@ class Order < ActiveRecord::Base
 
 	def self.most_expensive_order
 		where(amount: maximum(:amount))
-	end
-
-	def self.bigest_order
-		where(items_count: maximum(:items_count))
 	end
 
 	def self.orders_for_last_period(count_day = 7)
