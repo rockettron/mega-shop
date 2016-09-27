@@ -43,13 +43,6 @@ class UsersController < ApplicationController
 		redirect_to users_path, notice: "User deleted."
 	end
 
-	def replenish_balance		# Нужно удалить
-		if params[:user] 
-			add = params.require(:user)[:balance]
-			@user.replenish_balance(add.to_i)
-		end
-	end
-
 	private
 	
 	def user_params

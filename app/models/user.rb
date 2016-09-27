@@ -21,10 +21,6 @@ class User < ActiveRecord::Base
 		"#{first_name} #{last_name}"
 	end
 
-	def replenish_balance(money)
-		self.update_attributes(balance: self.balance + money)
-	end
-
 	def select_active_cart
 		carts.active.first
 	end
