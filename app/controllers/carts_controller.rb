@@ -31,10 +31,6 @@ class CartsController < ApplicationController
 	private
 
 	def set_cart
-		if signed_in?
-			@cart = current_user.select_active_cart 
-		else
-			@cart = Cart.find(id: session[:guest_cart_id])
-		end
+		@cart = current_cart
 	end
 end

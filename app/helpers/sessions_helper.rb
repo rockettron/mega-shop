@@ -7,6 +7,15 @@ module SessionsHelper
 			expires: 1.month.from_now.utc 
 		}
 		user.update_attribute(:remember_token, User.encrypt(remember_token))
+		puts current_cart.is_empty?
+		if current_cart.is_empty?
+			self.current_cart = user.select_active_cart
+			cart_token = User.new_remember_token
+			current_cart.update_attribute(:cart_token, User.encrypt(cart_token))
+			session[:cart_token] = cart_token
+		else
+			user.active_cart = current_cart
+		end
 		self.current_user = user
 	end
 
@@ -15,10 +24,8 @@ module SessionsHelper
 	end
 
 	def current_user
-		puts session
 		remember_token = User.encrypt(cookies[:remember_token])
 		@current_user ||= User.find_by_remember_token(remember_token)
-		@current_user ||= User.new(GUEST_PARAMS)
 	end
 
 	def current_user?(user)
@@ -26,14 +33,37 @@ module SessionsHelper
     end
 
 	def signed_in?
-		!current_user.role.guest?
+		!current_user.nil?
 	end
 
 	def sign_out
 		current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
 		cookies.delete(:remember_token)
+		session.delete(:cart_token)
 		self.current_user = nil
 	end	
+
+	def current_cart=(cart)
+		@current_cart = cart
+	end
+
+	def current_cart
+		cart_token = User.encrypt(session[:cart_token])
+		@current_cart ||= Cart.find_by_cart_token(cart_token)
+	end
+
+	def cart_created?
+		!current_cart.nil?
+	end
+
+	def create_cart
+		unless cart_created?
+			cart_token = User.new_remember_token
+			cart = Cart.create(cart_token: User.encrypt(cart_token))
+			session[:cart_token] = cart_token
+			self.current_cart = cart
+		end
+	end
 
 	def redirect_back_or(default)
 		redirect_to (session[:return_to] || default)
@@ -55,10 +85,5 @@ module SessionsHelper
 	def correct_user
 		redirect_to root_url unless current_user?(@user)
 	end
-
-	GUEST_PARAMS = {
-  		email: "Guest",
-  		role: :guest
-  	}
 
 end

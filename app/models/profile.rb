@@ -4,7 +4,6 @@ class Profile < ActiveRecord::Base
 	has_many :phones, dependent: :destroy
 	belongs_to :user
 
-
 	def full_name
       "#{first_name} #{last_name}"
     end

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	extend Enumerize 
-	enumerize :role, in: [:admin, :moderator, :guest, :user], default: :user
+	enumerize :role, in: [:admin, :moderator, :user], default: :user
 	
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -19,11 +19,15 @@ class User < ActiveRecord::Base
 	before_save ->{ email.downcase! }
 
 	def full_name
-		#profile.full_name
+		profile.nil? ? email : profile.full_name
 	end
 
 	def select_active_cart
-		carts.active.first
+		carts.active.last
+	end
+
+	def active_cart=(cart)
+		cart.update_attributes(user_id: id, status: true)
 	end
 
 	def superuser?

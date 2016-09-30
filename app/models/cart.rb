@@ -9,6 +9,10 @@ class Cart < ActiveRecord::Base
 		Cart.create(user_id: user_id) if status == false
 	end
 
+	def is_empty?
+		cart_items.empty?
+	end
+
 	def add_product(pr)
 		item = CartItem.find_by(product_id: pr.id, cart_id: id)
 		if item

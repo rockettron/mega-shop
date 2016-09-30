@@ -3,25 +3,25 @@ Rails.application.routes.draw do
   root to: 'dashboard#home'
 
   resources :users, only: [:edit, :update] 
-  
+  resources :carts, only: [:show] 
+
   resource :profile
-
-  namespace :admin do
-    root 'admin#root'
-  end
-
 
   resources :orders do
     get 'last', on: :collection
   end
 
-  get 'orders/:id/:user_id', as: 'user_orders_x', to: 'orders#display'  #настройка нересурсного маршрута
-  post 'orders/:id/:user_id/', to: 'orders#pay'       #эти две строчки сделаны в качестве упражнения
-  
   resources :products do
     get 'top10', on: :collection
   end
 
+  namespace :admin do
+    root 'admin#root'
+  end
+
+  get 'orders/:id/:user_id', as: 'user_orders_x', to: 'orders#display'  #настройка нересурсного маршрута
+  post 'orders/:id/:user_id/', to: 'orders#pay'       #эти две строчки сделаны в качестве упражнения
+  
   get 'sign_up', to: 'users#new'
   post 'sign_up', to: 'users#create'
   get 'sign_in', to: 'sessions#new'

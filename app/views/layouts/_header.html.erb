@@ -1,8 +1,8 @@
 <%= link_to "sample app", root_path %>
 <nav>
 	<ul>
-		<li><%= "You're logged in as #{current_user.full_name}" %></li>
 		<% if signed_in? %>
+			<li><%= "You're logged in as #{current_user.full_name}" %></li>
 			<li>
 				<% if current_user.profile.nil? %>
 					Your profile is empty <%= link_to "Fill it", new_profile_path, id: current_user.id %>
@@ -12,7 +12,9 @@
 			</li>
 			<li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
 		<% else %>
+			<li><%= "You're logged in as Guest" %></li>
 			<li><%= link_to "Sign in", sign_in_path %></li>
 		<% end %>
+		<li>Your <%= link_to "Cart", current_cart %> has got <%= current_cart.total_items %><li>
 	</ul>
 </nav>
