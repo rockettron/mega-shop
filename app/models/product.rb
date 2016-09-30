@@ -1,8 +1,5 @@
 class Product < ActiveRecord::Base
-	has_many :cart_items
-	has_many :order_items
-	has_many :carts, through: :order_items
-	has_many :orders, through: :order_items
+
 	has_many :images, as: :imageable
 
 	validates :price, allow_blank: true, numericality: { greater_than_or_equal_to: 0.01, message: 'Некорректная цена' }

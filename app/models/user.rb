@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 	before_save ->{ email.downcase! }
 
 	def full_name
-		#"#{first_name} #{last_name}"
+		#profile.full_name
 	end
 
 	def select_active_cart
