@@ -18,6 +18,7 @@ class ProfilesController < ApplicationController
 	end
 
 	def show
+		redirect_to new_profile_path unless @profile
 	end
 
 	def edit

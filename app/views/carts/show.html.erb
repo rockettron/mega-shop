@@ -1,0 +1,6 @@
+<p>Cart #<%= current_cart.id %></p>
+<ul>
+	<% @cart_items.each do |item| %>
+		<li><%= item.product %></li>
+	<% end %>
+</ul>

@@ -15,6 +15,6 @@
 			<li><%= "You're logged in as Guest" %></li>
 			<li><%= link_to "Sign in", sign_in_path %></li>
 		<% end %>
-		<li>Your <%= link_to "Cart", current_cart %> has got <%= current_cart.total_items %><li>
+		<li>Your <%= link_to "Cart", cart_path %> has got <%= current_cart.total_items %><li>
 	</ul>
 </nav>

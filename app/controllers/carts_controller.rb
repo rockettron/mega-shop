@@ -4,9 +4,9 @@ class CartsController < ApplicationController
 
 	def show
 		@cart_items = @cart.cart_items
-		render json: @cart_items.as_json  
+		#render json: @cart_items.as_json  
 	end
-	
+
 	def check_out
 		@cart_items = @cart.cart_items
 		p params[user_cart_path]
