@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
 	end
 
 	def active_cart=(cart)
+		select_active_cart.update_attribute(status: false)
 		cart.update_attributes(user_id: id, status: true)
 	end
 
