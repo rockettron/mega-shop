@@ -1,0 +1,11 @@
+<ul>
+<% @products.each do |prod| %>
+	<li>
+	<%= prod.title %> 
+	<%= link_to "Edit", edit_admin_product_path(prod) %> 
+	<%= link_to "Delete", admin_product_path(prod), method: :delete %>
+	</li>
+<% end %>
+</ul>
+<p><%= link_to "Create a new Product", new_admin_product_path %></p>
+

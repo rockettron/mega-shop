@@ -5,4 +5,6 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   before_action :create_cart
 
+  
+
 end

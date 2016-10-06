@@ -1,0 +1,8 @@
+<% if @product.errors.any? %>
+	<p> Errors: </p>
+	<ul>
+		<% @product.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+	</ul>
+<% end %>
