@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
 
-	before_action except: [:new, :create] { params[:id] && @user = User.find(params[:id]) }
+	before_action except: [:new, :create] { @user = current_user }
 	before_action only: [:new, :create] { redirect_back_or root_url if signed_in? }
 	before_action :authenticate_user, only: [:edit, :update] ####ДИМАС, СДЕЛАЙ КРАСИВУЮ ДОМАШНЮЮ СТРАНИЦУ ТИПА COOL SHOP
-	before_action :correct_user, only: [:edit, :update]
 
 	def new 
 		@user = User.new
@@ -25,9 +24,11 @@ class UsersController < ApplicationController
 
 	def update
 		if @user.update(user_params)
-			redirect_to @user
+			flash[:success] = "success update"
+			redirect_to profile_path
 		else
-			render :edit
+			flash[:error] = "error"
+			redirect_to edit_user_path
 		end
 	end
 
