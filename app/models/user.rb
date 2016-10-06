@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   private 
 
 	def create_cart_for_user
-		Cart.create(user: self)
+		Cart.create(user: self, cart_token: SecureRandom.urlsafe_base64)
 	end
 
 	def create_remember_token
