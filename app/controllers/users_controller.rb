@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 	
 	#before_action :correct_user, only: [:edit, :update]
 
+
 	def new 
 		@user = User.new
 	end	
@@ -26,9 +27,11 @@ class UsersController < ApplicationController
 
 	def update
 		if @user.update(user_params)
-			redirect_to @user
+			flash[:success] = "success update"
+			redirect_to profile_path
 		else
-			render :edit
+			flash[:error] = "error"
+			redirect_to edit_user_path
 		end
 	end
 

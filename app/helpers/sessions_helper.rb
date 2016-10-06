@@ -1,4 +1,4 @@
-module SessionsHelper
+module SessionsHelper	
 
 	def sign_in(user)
 		# User authenticate
@@ -7,13 +7,16 @@ module SessionsHelper
 			value: remember_token, 
 			expires: 1.month.from_now.utc 
 		}
-		
-		
+
+		user.update_attribute(:remember_token, User.encrypt(remember_token))
+
+		puts current_cart.is_empty?
 		if current_cart.is_empty?
+			session.delete(:cart_token)
 			current_cart.destroy
 			self.current_cart = user.select_active_cart
-			cart_token = SecureRandom.urlsafe_base64
-			current_cart.update_attribute(:cart_token, cart_token)
+#			cart_token = User.new_remember_token
+#			session[:cart_token] = cart_token
 		else
 			user.active_cart = current_cart
 		end
@@ -56,21 +59,21 @@ module SessionsHelper
 		current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
 		cookies.delete(:remember_token)
 		self.current_cart = nil
+
 		self.current_user = nil
+		p self.current_cart
 	end	
 
+
+
 	def create_cart
-		remember_token = User.encrypt(cookies[:remember_token])
-		user ||= User.find_by_remember_token(remember_token)
-		unless @current_cart.nil?
-			if !user.nil?
-				@current_cart = user.select_active_cart
-			else
-				cart_token = SecureRandom.urlsafe_base64
-				cart = Cart.create(cart_token: cart_token)
-				session[:cart_token] = cart_token
-				@current_cart = cart
-			end
+		p "2"
+		unless cart_created?
+			p "3"
+			cart_token = User.new_remember_token
+			cart = Cart.create(cart_token: cart_token)
+			session[:cart_token] = cart_token
+			self.current_cart = cart
 		end
 	end
 

@@ -2,13 +2,15 @@ Rails.application.routes.draw do
 
   root 'dashboard#home'
 
-  resource :cart, only: [:index, :show] 
+  resource :cart, only: [:show] 
   resources :orders 
+
   resources :products, only: [:index, :show] do 
     member do 
       post :add_to_cart
     end
   end
+
   resource :profile
 
   namespace :admin do
