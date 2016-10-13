@@ -2,25 +2,20 @@ module SessionsHelper
 
 	def sign_in(user)
 		# User authenticate
+
+		if current_cart.is_empty?
+			current_cart.destroy
+			self.current_cart = user.select_active_cart 
+		else
+			user.active_cart = current_cart
+		end
+		session.delete(:cart_token)
+		
 		remember_token = User.new_remember_token
 		cookies[:remember_token] = { 
 			value: remember_token, 
 			expires: 1.month.from_now.utc 
 		}
-
-		user.update_attribute(:remember_token, User.encrypt(remember_token))
-
-		puts current_cart.is_empty?
-		if current_cart.is_empty?
-			session.delete(:cart_token)
-			current_cart.destroy
-			self.current_cart = user.select_active_cart
-#			cart_token = User.new_remember_token
-#			session[:cart_token] = cart_token
-		else
-			user.active_cart = current_cart
-		end
-
 		user.update_attribute(:remember_token, User.encrypt(remember_token))
 		self.current_user = user
 	end
@@ -39,8 +34,8 @@ module SessionsHelper
 	end
 
 	def current_cart
-		@current_cart ||= current_user.select_active_cart if signed_in?
-		@current_cart ||= Cart.find_by_cart_token(session[:cart_token])
+		@current_cart ||= current_user.select_active_cart if signed_in? 
+		@current_cart ||= Cart.find_by(cart_token: session[:cart_token])
 	end
 
 	def current_user?(user)
@@ -58,13 +53,9 @@ module SessionsHelper
 	def sign_out
 		current_user.update_attribute(:remember_token, User.encrypt(User.new_remember_token))
 		cookies.delete(:remember_token)
-		self.current_cart = nil
-
 		self.current_user = nil
-		p self.current_cart
+		self.current_cart = nil
 	end	
-
-
 
 	def create_cart
 		p "2"

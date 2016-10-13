@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'admin#root'
     resources :users, except: [:new, :create]
-    resources :products, except: [:show]
+    resources :products, except: :show
+    resources :offers, except: :show
   end
 
   get 'sign_up', to: 'users#new'
