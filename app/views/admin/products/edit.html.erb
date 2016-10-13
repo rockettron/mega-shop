@@ -1,4 +1,4 @@
-<%= form_for [:admin, @product] do |f| %>
+<%= form_for @product, url: admin_product_path(@product) do |f| %>
 <%= render 'error_messages' %>
 <p>
 	<%= f.label :title %>
