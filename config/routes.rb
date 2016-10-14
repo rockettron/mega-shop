@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   end
 
   resource :profile
+  resources :offers, only: :create
+  patch 'offers/offer/:id', to: 'offers#offer'
 
   namespace :admin do
     root 'admin#root'
