@@ -1,0 +1,5 @@
+<%= form_for @offer, url: admin_offers_path do |f| %>
+	<p><%= f.label :topic %></p>
+	<p><%= f.text_area :topic %></p>
+	<p><%= f.submit "Create!" %></p>
+<% end %>

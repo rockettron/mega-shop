@@ -9,7 +9,6 @@ module SessionsHelper
 			user.active_cart = current_cart
 		end
 		session.delete(:cart_token)
-
 		remember_token = User.new_remember_token
 		cookies[:remember_token] = { 
 			value: remember_token, 

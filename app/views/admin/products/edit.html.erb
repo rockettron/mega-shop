@@ -1,5 +1,6 @@
 <%= form_for @product, url: admin_product_path(@product) do |f| %>
 <%= render 'error_messages' %>
+<%= @product.errors.each { |e| puts e } %>
 <p>
 	<%= f.label :title %>
 	<%= f.text_field :title %>

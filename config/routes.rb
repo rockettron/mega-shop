@@ -12,11 +12,14 @@ Rails.application.routes.draw do
   end
 
   resource :profile
+  resources :offers, only: :create
+  patch 'offers/offer/:id', to: 'offers#offer'
 
   namespace :admin do
     root 'admin#root'
     resources :users, except: [:new, :create]
-    resources :products, except: [:show]
+    resources :products, except: :show
+    resources :offers, except: :show
   end
 
   get 'sign_up', to: 'users#new'
