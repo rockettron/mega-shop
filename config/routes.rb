@@ -12,8 +12,11 @@ Rails.application.routes.draw do
   end
 
   resource :profile
-  resources :offers, only: :create
-  patch 'offers/offer/:id', to: 'offers#offer'
+  resources :offers, only: :create do 
+    member do
+      patch 'offer', as: 'vote'
+    end
+  end
 
   namespace :admin do
     root 'admin#root'

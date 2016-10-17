@@ -1,0 +1,23 @@
+nav class="navbar navbar-default" role="navigation"
+	.container
+		.havbar-header
+			= link_to "MegaShop", root_path, class: "navbar-brand"
+		ul.nav *{class: ["navbar-nav", "navbar-right"]}
+			li
+				a.nav *{class: "cart"} href="#{cart_path}" 
+					| Cart
+					
+			li.dropdown
+				a.dropdown-toggle data-toggle="dropdown" href="#"
+					- if signed_in?
+						| #{current_user.full_name}
+					- else 
+						| Guest
+					span.caret
+				ul.dropdown-menu@menu
+					- if signed_in?
+						li = link_to "Show Profile", profile_path 
+						li.divider
+						li = link_to "Logout", sign_out_path, method: :delete 
+					- else 
+						li = link_to "Login", sign_in_path

@@ -1,0 +1,10 @@
+= form_tag vote_offer_path(offer), method: :patch, remote: true do 
+	= hidden_field_tag 'offer[id]', offer.id
+
+	- first_option = offer.vote_options.first
+	- last_option = offer.vote_options.last 
+
+	- if session[:vote_offers] and session[:vote_offers][offer.id.to_s]
+		| result
+	- else 
+		| else
