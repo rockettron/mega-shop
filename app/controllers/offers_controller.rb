@@ -11,7 +11,7 @@ class OffersController < ApplicationController
 			if @offer && @offers_option && !session[:vote_offers][params[:vote_option][:id]]
 				inc_vote_count
 				add_cookies
-				#render update_form
+				render 'offers/update'
 			end
 		end 
 	end

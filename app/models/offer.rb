@@ -6,7 +6,7 @@ class Offer < ActiveRecord::Base
 	scope :unvisible, -> { where(visible: false) }
 
 	def normalized_votes_for(option)
-    	votes_summary == 0 ? 0 : ((option.votes_count.to_f / votes_summary) * 100).round(1)
+    	vote_summary == 0 ? 0 : ((option.votes_count.to_f / vote_summary) * 100).round(1)
   	end
 
 	def vote_summary
