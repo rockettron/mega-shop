@@ -1,20 +1,18 @@
 = form_tag vote_offer_path(offer), method: :patch, remote: true, class: "offer#{offer.id}" do 
 	= hidden_field_tag 'offer[id]', offer.id
+	.container
+		.fotm-control-static = offer.topic
 
-	.fotm-control-static = offer.topic
+		- if session[:vote_offers] and session[:vote_offers][offer.id.to_s]
+			- offer.vote_options.each do |option|
+				.radio
+					label = "#{option.title}"
+					label = "#{offer.normalized_votes_for option} %"
 
-	- first_option = offer.vote_options.first
-	- last_option = offer.vote_options.last 
-
-	- if session[:vote_offers] and session[:vote_offers][offer.id.to_s]
-		.col-sm-4
-			.col-sm-2.form-control-static = "#{first_option.title}"
-			.col-sm-2.form-control-static = "#{last_option.title}"
-		.col-sm-4
-			.col-sm-2.form-control-static = "#{offer.normalized_votes_for first_option}%"
-			.col-sm-2.form-control-static = "#{offer.normalized_votes_for last_option}%"
-	- else 
-		button.btn.btn-succeess name="vote_option[id]" value="#{first_option.id}"
-			= first_option.title
-		button.btn.btn-danger name="vote_option[id]" value="#{last_option.id}"
-			= last_option.title
+		- else
+			- offer.vote_options.each do |option|
+				.radio
+					label
+						input id="optionsRadios" type="radio" name="vote_option[id]" value="#{option.id}"
+							= option.title
+			= submit_tag "Vote!", class: "btn btn-primary"
