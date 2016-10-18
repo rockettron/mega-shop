@@ -1,18 +1,4 @@
-= form_tag vote_offer_path(offer), method: :patch, remote: true, class: "offer#{offer.id}" do 
-	= hidden_field_tag 'offer[id]', offer.id
-	.container
-		.fotm-control-static = offer.topic
-
-		- if session[:vote_offers] and session[:vote_offers][offer.id.to_s]
-			- offer.vote_options.each do |option|
-				.radio
-					label = "#{option.title}"
-					label = "#{offer.normalized_votes_for option} %"
-
-		- else
-			- offer.vote_options.each do |option|
-				.radio
-					label
-						input id="optionsRadios" type="radio" name="vote_option[id]" value="#{option.id}"
-							= option.title
-			= submit_tag "Vote!", class: "btn btn-primary"
+.panel-heading
+	h3.panel-title = offer.topic
+.panel-body
+	= render 'offers/form', offer: offer

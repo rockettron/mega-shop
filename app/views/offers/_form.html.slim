@@ -1,0 +1,17 @@
+= form_tag vote_offer_path(offer), method: :patch, remote: true, class: "offer#{offer.id}" do 
+	= hidden_field_tag 'offer[id]', offer.id
+
+	- if session[:vote_offers] and session[:vote_offers][offer.id.to_s]
+		- offer.vote_options.each do |option|
+			- value = offer.normalized_votes_for option
+			label = "#{option.title}"
+			.progress
+				.progress-bar@progressbar  aria-valuenow="#{value}" aria-valuemin="0" aria-valuemax="100" style="width: #{value}%;"
+					= value.to_s + "%"
+	- else
+		- offer.vote_options.each do |option|
+			.radio
+				label
+					input id="optionsRadios" type="radio" name="vote_option[id]" value="#{option.id}"
+						= option.title
+		= submit_tag "Vote!", class: "btn btn-primary"

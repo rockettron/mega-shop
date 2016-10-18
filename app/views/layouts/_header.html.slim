@@ -5,7 +5,8 @@ nav class="navbar navbar-default" role="navigation"
 		ul.nav *{class: ["navbar-nav", "navbar-right"]}
 			li
 				a.nav *{class: "cart"}  href="#{cart_path}" 
-					| Cart
+					| Cart 
+					span.badge = current_cart.cart_items.count
 					
 			li.dropdown
 				a.dropdown-toggle data-toggle="dropdown" href="#"
@@ -16,8 +17,14 @@ nav class="navbar navbar-default" role="navigation"
 					span.caret
 				ul.dropdown-menu@menu
 					- if signed_in?
-						li = link_to "Show Profile", profile_path 
+						li
+							a href=profile_path
+								span.glyphicon.glyphicon-user 
+								span.glyphicon-class   Show Profile
 						li.divider
-						li = link_to "Logout", sign_out_path, method: :delete 
+						li 
+							a href=sign_out_path data-method="delete"
+								span.glyphicon.glyphicon-off
+								span.glyphicon-class   Logout
 					- else 
 						li = link_to "Login", sign_in_path
