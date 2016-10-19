@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
 	end
 
 	def active_cart=(cart)
-		carts.active.map { |c| c.update!(status: false) }
-		cart.update!(user_id: id, status: true)
+		carts.active.each { |c| c.update_attribute(:status, false) }
+		cart.update_attributes(user_id: id, status: true)
 	end
 
 	def superuser?
