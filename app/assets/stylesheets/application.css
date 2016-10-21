@@ -14,16 +14,11 @@
  *= require_self
  */
 
-a.nav.cart {
-	padding-left: 40px;
-}
-
-a.nav.cart:before {
-	position: absolute;
-	left: 15px;
+span.cart {
+	display: inline-block;
+  vertical-align: middle;
 	width: 21px;
 	height: 21px;
-	vertical-align: bottom;
 	background: url("/assets/Cart.png") no-repeat 100% 100%;
 	background-size: cover;
 }
