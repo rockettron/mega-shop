@@ -1,6 +1,0 @@
-<% @products.each do |p| %>
-	<p><%= link_to p.title, product_path(p.id) %></p>
-	<p><%= p.description %></p>
-	<p><%= p.price %></p><hr>
-<% end %>
-<%= link_to "new", new_product_path %>

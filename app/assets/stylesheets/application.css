@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+span.cart {
+	display: inline-block;
+  vertical-align: middle;
+	width: 21px;
+	height: 21px;
+	background: url("/assets/Cart.png") no-repeat 100% 100%;
+	background-size: cover;
+}
+
+.offer-panel {
+	position: relative;
+	vertical-align: top 5px;
+	right: 0px;
+	min-width: 200px;
+	max-width: 300px;	
+}

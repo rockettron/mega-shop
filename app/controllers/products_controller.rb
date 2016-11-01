@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
 
+	before_action :set_product, except: [:index, :new, :create]
+
 	def index
 		@products = Product.all
 		respond_to do |format|
@@ -22,11 +24,9 @@ class ProductsController < ApplicationController
 	end
 
 	def edit
-		@product = Product.find(params[:id]) 
 	end
 
 	def show
-		@product = Product.find(params[:id])
 		respond_to do |f|
 			f.html
 			f.json { render json: @product.as_json(include: [:orders, :order_items])}
@@ -34,7 +34,6 @@ class ProductsController < ApplicationController
 	end
 
 	def update
-		@product = Product.find(params[:id])
 		if @product.update(product_params)
 			redirect_to @product
 		else
@@ -43,9 +42,13 @@ class ProductsController < ApplicationController
 	end
 
 	def destroy
-		@product = Product.find(params[:id])
 		@product.destroy
 		redirect_to :products
+	end
+
+	def add_to_cart
+		current_cart.add_product(@product)
+		redirect_back_or products_path
 	end
 
 	def top10
@@ -58,5 +61,9 @@ class ProductsController < ApplicationController
 	def product_params
 		params.require(:product).permit(:title, :description, :price)  #в чем разница, если писать без require?
 		#Объяснить метод permit
+	end
+
+	def set_product 
+		@product = Product.find(params[:id])
 	end
 end

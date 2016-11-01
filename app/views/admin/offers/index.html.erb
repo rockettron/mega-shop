@@ -1,0 +1,22 @@
+<h1>Голосования</h1>
+<table>
+	<thread>
+		<tr>
+			<th>Topic</th>
+			<th colspan="2"></th>>
+		</tr>
+	</thread>
+
+	<tbody>
+		<% @offers.each do |offer| %>
+			<tr>
+				<td><%= offer.topic %></td>
+				<td><%= link_to "Edit", edit_admin_offer_path(offer) %></td>
+				<td><%= link_to "Delete", admin_offer_path(offer), method: :delete %></td>
+			</tr>
+		<% end %>		
+	</tbody>
+
+</table>
+
+<%= link_to "Add offer", new_admin_offer_path %>

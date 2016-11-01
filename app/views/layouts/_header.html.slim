@@ -1,0 +1,31 @@
+nav class="navbar navbar-default" role="navigation"
+	.container
+		.havbar-header
+			= link_to "MegaShop", root_path, class: "navbar-brand"
+		ul.nav *{class: ["navbar-nav", "navbar-right"]}
+			li
+				a.nav href="#{cart_path}"
+					span.cart
+					|  Cart 
+					span.badge = current_cart.total_items
+					
+			li.dropdown
+				a.dropdown-toggle data-toggle="dropdown" href="#"
+					- if signed_in?
+						| #{current_user.full_name}
+					- else 
+						| Guest
+					span.caret
+				ul.dropdown-menu@menu
+					- if signed_in?
+						li
+							a href=profile_path
+								span.glyphicon.glyphicon-user 
+								span.glyphicon-class   Show Profile
+						li.divider
+						li 
+							a href=sign_out_path data-method="delete"
+								span.glyphicon.glyphicon-off
+								span.glyphicon-class   Logout
+					- else 
+						li = link_to "Login", sign_in_path

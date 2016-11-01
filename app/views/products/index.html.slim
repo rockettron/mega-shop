@@ -1,0 +1,15 @@
+.row
+	- @products.each do |prod|
+		.col-sm-6.col-md-4
+			.thumbnail
+				a href="#{product_path(prod.id)}"
+					img.img-thumbnail src="assets/try.jpg" style="max-width: 300px;" alt=prod.title
+				.caption
+					h3 = prod.title
+					p = truncate(strip_tags(prod.description), length: 250)
+					p
+						a.btn.btn-primary@button href="#{add_to_cart_product_path(prod)}" data-method="post"
+							span.glyphicon.glyphicon-plus
+							|  Add to Cart
+						|  
+						a.btn.btn-default@button href="#{product_path(prod)}" Show

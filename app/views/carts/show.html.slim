@@ -1,0 +1,34 @@
+.table-responsive
+	table.table
+		thead
+			tr
+				th #
+				th style="width: 1px;" Image
+				th Title
+				th Price
+				th Count
+				th Sum
+		tbody
+			- @cart_items.each_with_index do |item, i|
+				tr
+					td = i + 1
+					td
+						a href="#{product_path(item.product_id)}"
+							img src="assets/try.jpg" style="max-width: 50px; max-height: 50px;"
+					td 
+						p 
+							strong = item.product.title
+						p = truncate(item.product.description, length: 50)
+					td = "#{item.price}$"
+					td = item.quantity
+					td = "#{item.total_price}$"
+	
+		tfoot
+			tr
+				td 
+				td 
+				td Total price:
+				td
+				td
+				td = "#{@cart_items.reduce(0) { |sum, a| sum + a.total_price } }$"
+

@@ -4,9 +4,9 @@ class Cart < ActiveRecord::Base
 	has_many :products, :through => :cart_items
 
 	scope :active, -> { where(status: true) }
-
-	after_save do
-		Cart.create(user_id: user_id) if status == false
+	
+	def is_empty?
+		cart_items.empty?
 	end
 
 	def add_product(pr)

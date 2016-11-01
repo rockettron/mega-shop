@@ -1,0 +1,3 @@
+| Welcome to Mega-Shop
+.panel.panel-info.offer-panel
+	= render 'offers/offer', offer: Offer.visible.order('RAND()').first
